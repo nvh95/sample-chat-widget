@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 
 function App() {
+  const handleClickSettings = () => {
+    if (window.parent) {
+      window.parent.postMessage({
+        signal: 'close',
+        from: 'faqbot_chat_widget',
+      }, '*');
+    }
+  }
+
   const renderConversation = () => {
     return Array.from(Array(100).keys()).map(index => {
       if (index % 2 === 0) {
@@ -16,15 +25,17 @@ function App() {
         </BotMessage>
       )
     })
-
   }
+
   return (
     <Wrapper>
       <Header>
         <Logo>
           Awesome Chat Widget
         </Logo>
-        <SettingsButton />
+        <SettingsButton 
+          onClick={handleClickSettings}
+        />
       </Header>
 
       <Content>
